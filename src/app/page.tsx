@@ -1,9 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { motion } from "framer-motion"
 import {
   LineChart,
   Line,
@@ -13,142 +12,192 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts"
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
+import { ChevronUp, ChevronDown } from "lucide-react"
 
-// 📊 Sample datasets
-const revenueData = [
-  { month: "Jan", value: 40 },
-  { month: "Feb", value: 20 },
-  { month: "Mar", value: 35 },
-  { month: "Apr", value: 60 },
-  { month: "May", value: 30 },
-]
-
-const expensesData = [
-  { month: "Jan", value: 10 },
-  { month: "Feb", value: 25 },
-  { month: "Mar", value: 15 },
-  { month: "Apr", value: 20 },
-  { month: "May", value: 18 },
-]
-
-const profitData = [
-  { month: "Jan", value: 30 },
-  { month: "Feb", value: -5 },
-  { month: "Mar", value: 20 },
-  { month: "Apr", value: 40 },
-  { month: "May", value: 12 },
-]
-
-const allMonths = ["COVID", "Change Management", "Bankruptcy", "Apr", "May"]
+const fixEffects = {
+  "fix 1": 0.05,
+  "fix 2": -0.03,
+  "fix 3": 0.10,
+}
 
 export default function Home() {
-  // 🔍 Text input filter (optional, not used now but left in)
-  const [filter, setFilter] = useState("")
+  const [activeFixes, setActiveFixes] = useState<string[]>([])
+  const [numYears, setNumYears] = useState(4)
+  const [yScale, setYScale] = useState(100)
 
-  // 🔁 Dropdown selection
-  const [dataset, setDataset] = useState("revenue")
-
-  // ✅ Month slicer selection (checkboxes)
-  const [selectedMonths, setSelectedMonths] = useState<string[]>(allMonths)
-
-  // Handle checkbox slicer toggle
-  const toggleMonth = (month: string) => {
-    setSelectedMonths((prev) =>
-      prev.includes(month)
-        ? prev.filter((m) => m !== month)
-        : [...prev, month]
+  const toggleFix = (fix: string) => {
+    setActiveFixes((prev) =>
+      prev.includes(fix) ? prev.filter((f) => f !== fix) : [...prev, fix]
     )
   }
 
-  // Switch between datasets
-  const dataMap: Record<string, { month: string; value: number }[]> = {
-    revenue: revenueData,
-    expenses: expensesData,
-    profit: profitData,
+  const resetFixes = () => {
+    setActiveFixes([])
   }
 
-  const fullData = dataMap[dataset]
-
-  // Final filtered graph data based on selected months
-  const filteredData = fullData.filter((d) =>
-    selectedMonths.includes(d.month)
+  const totalAdjustment = activeFixes.reduce(
+    (sum, fix) => sum + (fixEffects[fix as keyof typeof fixEffects] || 0),
+    0
   )
 
+  const baseData = Array.from({ length: numYears }, (_, i) => ({
+    year: i + 1,
+    value: yScale + i * (80 + numYears * 5),
+  }))
+
+  const adjustedData = baseData.map((d) => ({
+    year: d.year,
+    value: d.value * (1 + totalAdjustment),
+  }))
+
   return (
-    <main className="min-h-screen p-6 bg-gray-100">
-      <Card className="max-w-3xl mx-auto">
-        <CardContent className="p-6">
-          <h1 className="text-2xl font-bold mb-4">
-            📊 Flounder's Interactive Finance Graph Thing
+    <motion.main
+      className="min-h-screen bg-[#14001c] flex items-center justify-center p-8"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+      <Card className="w-full max-w-6xl bg-[#23022e] shadow-xl rounded-2xl border-0">
+        <CardContent className="p-8 relative">
+          {/* 🏷️ Title with Outfit font */}
+          <h1 className="text-5xl font-bold tracking-tight mb-4 text-center leading-tight text-[#f5c542]" style={{ fontFamily: "Outfit, sans-serif" }}>
+            Financial Simulation
           </h1>
 
-          {/* 🔍 Input field (optional, not required with slicer) */}
-          <div className="flex gap-2 mb-4">
-            <Input
-              placeholder="Type month name (e.g. Jan)..."
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-            />
-            <Button onClick={() => setFilter("")}>Reset</Button>
+          {/* 🛠️ Fix Buttons + Reset Button */}
+          <div className="flex flex-wrap justify-center items-center gap-4 mb-6">
+            {["fix 1", "fix 2", "fix 3"].map((fix) => (
+              <motion.button
+                key={fix}
+                whileTap={{ scale: 0.9 }}
+                whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
+                transition={{ type: "spring", stiffness: 300 }}
+                onClick={() => toggleFix(fix)}
+                className={`w-32 h-14 text-md font-medium rounded-xl transition-all tracking-wide ${
+                  activeFixes.includes(fix)
+                    ? "bg-yellow-400 text-black ring-2 ring-yellow-300"
+                    : "bg-black text-white hover:bg-black hover:text-white"
+                }`}
+              >
+                {fix.toUpperCase()}
+              </motion.button>
+            ))}
+
+            {/* 🔁 Golden Reset Button */}
+            <motion.button
+              whileTap={{ scale: 0.95 }}
+              whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
+              transition={{ type: "spring", stiffness: 300 }}
+              onClick={resetFixes}
+              className="h-10 text-sm px-4 py-2 font-semibold rounded-lg bg-yellow-400 text-black hover:bg-black hover:text-yellow-400 border-none transition-all"
+            >
+              Reset
+            </motion.button>
           </div>
 
-          {/* 🔽 Dropdown to select dataset */}
-          <div className="mb-6">
-            <Select onValueChange={setDataset} defaultValue="revenue">
-              <SelectTrigger className="w-[200px]">
-                <SelectValue placeholder="Select dataset" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="revenue">Revenue</SelectItem>
-                <SelectItem value="expenses">Expenses</SelectItem>
-                <SelectItem value="profit">Profit</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* ✅ Slicer checkboxes to select visible months */}
-          <div className="mb-6">
-            <p className="font-medium mb-2">Select Months:</p>
-            <div className="flex flex-wrap gap-4">
-              {allMonths.map((month) => (
-                <div key={month} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={month}
-                    checked={selectedMonths.includes(month)}
-                    onCheckedChange={() => toggleMonth(month)}
-                  />
-                  <Label htmlFor={month}>{month}</Label>
-                </div>
-              ))}
+          {/* 📈 Chart Area with Arrow Buttons NEXT to Axes */}
+          <div className="relative flex justify-center items-center">
+            {/* Y-Axis Buttons - Centered vertically left of the graph */}
+            <div className="absolute left-[-60px] top-1/2 -translate-y-1/2 flex flex-col items-center gap-2">
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className="bg-black hover:bg-yellow-400 text-white rounded-full p-2 shadow-md transition-all"
+                onClick={() => setYScale((prev) => Math.min(prev + 50, 1000))}
+              >
+                <ChevronUp className="h-5 w-5" />
+              </motion.button>
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className="bg-black hover:bg-yellow-400 text-white rounded-full p-2 shadow-md transition-all"
+                onClick={() => setYScale((prev) => Math.max(prev - 50, 10))}
+              >
+                <ChevronDown className="h-5 w-5" />
+              </motion.button>
             </div>
+
+            {/* X-Axis Buttons - Centered horizontally below the graph */}
+            <div className="absolute bottom-[-40px] flex items-center gap-2">
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className="bg-black hover:bg-yellow-400 text-white rounded-full p-2 shadow-md transition-all"
+                onClick={() => setNumYears((prev) => Math.min(prev + 1, 15))}
+              >
+                <ChevronUp className="h-5 w-5" />
+              </motion.button>
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className="bg-black hover:bg-yellow-400 text-white rounded-full p-2 shadow-md transition-all"
+                onClick={() => setNumYears((prev) => Math.max(prev - 1, 1))}
+              >
+                <ChevronDown className="h-5 w-5" />
+              </motion.button>
+            </div>
+
+            {/* 📈 Actual Graph */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2 }}
+              className="w-full h-[500px]"
+            >
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={adjustedData}
+                  style={{ backgroundColor: "#1a0028", borderRadius: "12px" }}
+                >
+                  <CartesianGrid stroke="#ffffff" strokeDasharray="3 3" />
+                  <XAxis
+                    type="number"
+                    dataKey="year"
+                    domain={[1, numYears]}
+                    tickCount={numYears}
+                    stroke="#d6c2f7"
+                    label={{
+                      value: "Years",
+                      position: "insideBottom",
+                      offset: 10,
+                      fill: "#d6c2f7",
+                    }}
+                  />
+                  <YAxis
+                    type="number"
+                    domain={[0, "auto"]}
+                    stroke="#d6c2f7"
+                    label={{
+                      value: "Projection (%)",
+                      angle: -90,
+                      position: "insideLeft",
+                      fill: "#d6c2f7",
+                    }}
+                  />
+                  <Tooltip
+                    contentStyle={{ backgroundColor: "#2f0a43", border: "1px solid #6a0dad" }}
+                    itemStyle={{ color: "#ffffff" }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="value"
+                    stroke="#ffffff" // Pure white line
+                    strokeWidth={3}
+                    activeDot={{ r: 8, fill: "#c084fc", stroke: "#c084fc" }} // Luxury purple active dot
+                    dot={{ r: 4, fill: "#c084fc", stroke: "#c084fc" }} // Normal dots
+                    animationDuration={1000}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </motion.div>
           </div>
 
-          {/* 📈 Chart Area */}
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={filteredData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
-              <YAxis />
-              <Tooltip />
-              <Line
-                type="monotone"
-                dataKey="value"
-                stroke="#8884d8"
-                strokeWidth={2}
-              />
-            </LineChart>
-          </ResponsiveContainer>
         </CardContent>
       </Card>
-    </main>
+    </motion.main>
   )
 }
