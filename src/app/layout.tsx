@@ -14,12 +14,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// ✅ Outfit (for title ONLY)
-const outfit = Outfit({
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  variable: "--font-outfit",
-});
 
 export const metadata: Metadata = {
   title: "Create Next App",
