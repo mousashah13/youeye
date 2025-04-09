@@ -1,8 +1,15 @@
-"use client"
+"use client" // 🧠 This tells Next.js: this page needs to run on the client side (browser).
 
+// 📦 Import React Hooks
 import { useState } from "react"
+
+// 🧱 UI Components
 import { Card, CardContent } from "@/components/ui/card"
+
+// 🎬 Animation Library
 import { motion } from "framer-motion"
+
+// 📈 Chart Components
 import {
   LineChart,
   Line,
@@ -12,60 +19,81 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts"
+
+// ⬆️⬇️ Icons for up/down buttons
 import { ChevronUp, ChevronDown } from "lucide-react"
 
+// 🧠 Define possible fixes and their effects
 const fixEffects = {
-  "fix 1": 0.05,
-  "fix 2": -0.03,
-  "fix 3": 0.10,
+  "fix 1": 0.05,  // +5% effect
+  "fix 2": -0.03, // -3% effect
+  "fix 3": 0.10,  // +10% effect
 }
 
+// 🏠 The main Home page
 export default function Home() {
+  // 🗃️ State to track which fixes are active
   const [activeFixes, setActiveFixes] = useState<string[]>([])
+
+  // 🗓️ State for number of years shown in the chart
   const [numYears, setNumYears] = useState(4)
+
+  // 📏 State for Y-axis scaling (vertical scaling of the graph)
   const [yScale, setYScale] = useState(100)
 
+  // 🔁 Toggle a fix (add/remove from activeFixes)
   const toggleFix = (fix: string) => {
     setActiveFixes((prev) =>
       prev.includes(fix) ? prev.filter((f) => f !== fix) : [...prev, fix]
     )
   }
 
+  // 🔄 Reset all fixes (clear activeFixes)
   const resetFixes = () => {
     setActiveFixes([])
   }
 
+  // ➕ Sum up the total adjustment from active fixes
   const totalAdjustment = activeFixes.reduce(
     (sum, fix) => sum + (fixEffects[fix as keyof typeof fixEffects] || 0),
     0
   )
 
+  // 📊 Base data without any adjustments
   const baseData = Array.from({ length: numYears }, (_, i) => ({
     year: i + 1,
     value: yScale + i * (80 + numYears * 5),
   }))
 
+  // 📈 Adjusted data based on selected fixes
   const adjustedData = baseData.map((d) => ({
     year: d.year,
     value: d.value * (1 + totalAdjustment),
   }))
 
+  // 🖥️ Return the page layout
   return (
     <motion.main
       className="min-h-screen bg-[#14001c] flex items-center justify-center p-8"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      initial={{ opacity: 0 }}   // 👻 Start hidden
+      animate={{ opacity: 1 }}   // 🎥 Fade in
       transition={{ duration: 1 }}
     >
+      {/* 🎴 Main card container */}
       <Card className="w-full max-w-6xl bg-[#23022e] shadow-xl rounded-2xl border-0">
         <CardContent className="p-8 relative">
-          {/* 🏷️ Title with Outfit font */}
-          <h1 className="text-5xl font-bold tracking-tight mb-4 text-center leading-tight text-[#f5c542]" style={{ fontFamily: "Outfit, sans-serif" }}>
+
+          {/* 🏷️ Title */}
+          <h1
+            className="text-5xl font-bold tracking-tight mb-4 text-center leading-tight text-[#f5c542]"
+            style={{ fontFamily: "Outfit, sans-serif" }}
+          >
             Financial Simulation
           </h1>
 
-          {/* 🛠️ Fix Buttons + Reset Button */}
+          {/* 🛠️ Fix buttons and Reset button */}
           <div className="flex flex-wrap justify-center items-center gap-4 mb-6">
+            {/* 🔘 Buttons for each fix */}
             {["fix 1", "fix 2", "fix 3"].map((fix) => (
               <motion.button
                 key={fix}
@@ -75,15 +103,15 @@ export default function Home() {
                 onClick={() => toggleFix(fix)}
                 className={`w-32 h-14 text-md font-medium rounded-xl transition-all tracking-wide ${
                   activeFixes.includes(fix)
-                    ? "bg-yellow-400 text-black ring-2 ring-yellow-300"
-                    : "bg-black text-white hover:bg-black hover:text-white"
+                    ? "bg-yellow-400 text-black ring-2 ring-yellow-300"  // 🔥 Active button
+                    : "bg-black text-white hover:bg-black hover:text-white" // ⚫ Inactive button
                 }`}
               >
                 {fix.toUpperCase()}
               </motion.button>
             ))}
 
-            {/* 🔁 Golden Reset Button */}
+            {/* 🔁 Reset button */}
             <motion.button
               whileTap={{ scale: 0.95 }}
               whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
@@ -95,10 +123,12 @@ export default function Home() {
             </motion.button>
           </div>
 
-          {/* 📈 Chart Area with Arrow Buttons NEXT to Axes */}
+          {/* 📈 Chart area */}
           <div className="relative flex justify-center items-center">
-            {/* Y-Axis Buttons - Centered vertically left of the graph */}
+
+            {/* ⬆️⬇️ Y-axis (vertical) zoom buttons */}
             <div className="absolute left-[-60px] top-1/2 -translate-y-1/2 flex flex-col items-center gap-2">
+              {/* Zoom in Y-axis */}
               <motion.button
                 whileTap={{ scale: 0.9 }}
                 whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
@@ -108,6 +138,8 @@ export default function Home() {
               >
                 <ChevronUp className="h-5 w-5" />
               </motion.button>
+
+              {/* Zoom out Y-axis */}
               <motion.button
                 whileTap={{ scale: 0.9 }}
                 whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
@@ -119,8 +151,9 @@ export default function Home() {
               </motion.button>
             </div>
 
-            {/* X-Axis Buttons - Centered horizontally below the graph */}
+            {/* ➡️⬅️ X-axis (horizontal) zoom buttons */}
             <div className="absolute bottom-[-40px] flex items-center gap-2">
+              {/* More years */}
               <motion.button
                 whileTap={{ scale: 0.9 }}
                 whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
@@ -130,6 +163,8 @@ export default function Home() {
               >
                 <ChevronUp className="h-5 w-5" />
               </motion.button>
+
+              {/* Fewer years */}
               <motion.button
                 whileTap={{ scale: 0.9 }}
                 whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
@@ -141,7 +176,7 @@ export default function Home() {
               </motion.button>
             </div>
 
-            {/* 📈 Actual Graph */}
+            {/* 📊 The actual chart */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -153,7 +188,10 @@ export default function Home() {
                   data={adjustedData}
                   style={{ backgroundColor: "#1a0028", borderRadius: "12px" }}
                 >
+                  {/* 🧱 Chart grid */}
                   <CartesianGrid stroke="#ffffff" strokeDasharray="3 3" />
+
+                  {/* 📅 X Axis */}
                   <XAxis
                     type="number"
                     dataKey="year"
@@ -167,6 +205,8 @@ export default function Home() {
                       fill: "#d6c2f7",
                     }}
                   />
+
+                  {/* 🔼 Y Axis */}
                   <YAxis
                     type="number"
                     domain={[0, "auto"]}
@@ -178,22 +218,27 @@ export default function Home() {
                       fill: "#d6c2f7",
                     }}
                   />
+
+                  {/* 🪄 Tooltip on hover */}
                   <Tooltip
                     contentStyle={{ backgroundColor: "#2f0a43", border: "1px solid #6a0dad" }}
                     itemStyle={{ color: "#ffffff" }}
                   />
+
+                  {/* 📈 The line */}
                   <Line
                     type="monotone"
                     dataKey="value"
-                    stroke="#ffffff" // Pure white line
+                    stroke="#ffffff"
                     strokeWidth={3}
-                    activeDot={{ r: 8, fill: "#c084fc", stroke: "#c084fc" }} // Luxury purple active dot
-                    dot={{ r: 4, fill: "#c084fc", stroke: "#c084fc" }} // Normal dots
+                    activeDot={{ r: 8, fill: "#c084fc", stroke: "#c084fc" }}
+                    dot={{ r: 4, fill: "#c084fc", stroke: "#c084fc" }}
                     animationDuration={1000}
                   />
                 </LineChart>
               </ResponsiveContainer>
             </motion.div>
+
           </div>
 
         </CardContent>
