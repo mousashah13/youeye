@@ -83,16 +83,8 @@ export default function Home() {
       <Card className="w-full max-w-6xl bg-[#23022e] shadow-xl rounded-2xl border-0">
         <CardContent className="p-8 relative">
 
-          {/* 🏷️ Title */}
-          <h1
-            className="text-5xl font-bold tracking-tight mb-4 text-center leading-tight text-[#f5c542]"
-            style={{ fontFamily: "Outfit, sans-serif" }}
-          >
-            Financial Simulation
-          </h1>
-
           {/* 🛠️ Fix buttons and Reset button */}
-          <div className="flex flex-wrap justify-center items-center gap-4 mb-6">
+          <div className="flex flex-wrap justify-center items-center gap-2 mb-6">
             {/* 🔘 Buttons for each fix */}
             {["fix 1", "fix 2", "fix 3"].map((fix) => (
               <motion.button
@@ -101,7 +93,7 @@ export default function Home() {
                 whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
                 transition={{ type: "spring", stiffness: 300 }}
                 onClick={() => toggleFix(fix)}
-                className={`w-32 h-14 text-md font-medium rounded-xl transition-all tracking-wide ${
+                className={`w-16 h-7 text-md font-medium rounded-xl transition-all tracking-wide ${
                   activeFixes.includes(fix)
                     ? "bg-yellow-400 text-black ring-2 ring-yellow-300"  // 🔥 Active button
                     : "bg-black text-white hover:bg-black hover:text-white" // ⚫ Inactive button
@@ -117,7 +109,7 @@ export default function Home() {
               whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
               transition={{ type: "spring", stiffness: 300 }}
               onClick={resetFixes}
-              className="h-10 text-sm px-4 py-2 font-semibold rounded-lg bg-yellow-400 text-black hover:bg-black hover:text-yellow-400 border-none transition-all"
+              className="h-7 text-sm px-4 font-semibold rounded-lg bg-yellow-400 text-black hover:bg-black hover:text-yellow-400 border-none transition-all"
             >
               Reset
             </motion.button>
