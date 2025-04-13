@@ -74,13 +74,13 @@ export default function Home() {
   // 🖥️ Return the page layout
   return (
     <motion.main
-      className="min-h-screen bg-[#14001c] flex items-center justify-center p-8"
+      className="min-h-screen bg-[#a0c5c4] flex items-center justify-center p-8"
       initial={{ opacity: 0 }}   // 👻 Start hidden
       animate={{ opacity: 1 }}   // 🎥 Fade in
       transition={{ duration: 1 }}
     >
       {/* 🎴 Main card container */}
-      <Card className="w-full max-w-6xl bg-[#23022e] shadow-xl rounded-2xl border-0">
+      <Card className="w-full max-w-6xl bg-[#fb968a] shadow-xl rounded-2xl border-0">
         <CardContent className="p-8 relative">
 
           {/* 🛠️ Fix buttons and Reset button */}
@@ -93,10 +93,10 @@ export default function Home() {
                 whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
                 transition={{ type: "spring", stiffness: 300 }}
                 onClick={() => toggleFix(fix)}
-                className={`w-16 h-7 text-md font-medium rounded-xl transition-all tracking-wide ${
+                className={`w-14 h-7 text-xs font-medium rounded-xl transition-all tracking-wide ${
                   activeFixes.includes(fix)
                     ? "bg-yellow-400 text-black ring-2 ring-yellow-300"  // 🔥 Active button
-                    : "bg-black text-white hover:bg-black hover:text-white" // ⚫ Inactive button
+                    : "bg-[#848463] text-[#d6c2f7] hover:bg-black hover:text-white" // ⚫ Inactive button
                 }`}
               >
                 {fix.toUpperCase()}
@@ -125,7 +125,7 @@ export default function Home() {
                 whileTap={{ scale: 0.9 }}
                 whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className="bg-black hover:bg-yellow-400 text-white rounded-full p-2 shadow-md transition-all"
+                className="bg-[#848463] hover:bg-yellow-400 text-[#d6c2f7] rounded-full p-2 shadow-md transition-all"
                 onClick={() => setYScale((prev) => Math.min(prev + 50, 1000))}
               >
                 <ChevronUp className="h-5 w-5" />
@@ -136,7 +136,7 @@ export default function Home() {
                 whileTap={{ scale: 0.9 }}
                 whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className="bg-black hover:bg-yellow-400 text-white rounded-full p-2 shadow-md transition-all"
+                className="bg-[#848463] hover:bg-yellow-400 text-[#d6c2f7] rounded-full p-2 shadow-md transition-all"
                 onClick={() => setYScale((prev) => Math.max(prev - 50, 10))}
               >
                 <ChevronDown className="h-5 w-5" />
@@ -150,7 +150,7 @@ export default function Home() {
                 whileTap={{ scale: 0.9 }}
                 whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className="bg-black hover:bg-yellow-400 text-white rounded-full p-2 shadow-md transition-all"
+                className="bg-[#848463] hover:bg-yellow-400 text-[#d6c2f7] rounded-full p-2 shadow-md transition-all"
                 onClick={() => setNumYears((prev) => Math.min(prev + 1, 15))}
               >
                 <ChevronUp className="h-5 w-5" />
@@ -161,7 +161,7 @@ export default function Home() {
                 whileTap={{ scale: 0.9 }}
                 whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className="bg-black hover:bg-yellow-400 text-white rounded-full p-2 shadow-md transition-all"
+                className="bg-[#848463] hover:bg-yellow-400 text-[#d6c2f7] rounded-full p-2 shadow-md transition-all"
                 onClick={() => setNumYears((prev) => Math.max(prev - 1, 1))}
               >
                 <ChevronDown className="h-5 w-5" />
@@ -178,7 +178,7 @@ export default function Home() {
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart
                   data={adjustedData}
-                  style={{ backgroundColor: "#1a0028", borderRadius: "12px" }}
+                  style={{ backgroundColor: "#848463", borderRadius: "12px" }}
                 >
                   {/* 🧱 Chart grid */}
                   <CartesianGrid stroke="#ffffff" strokeDasharray="3 3" />
@@ -213,7 +213,7 @@ export default function Home() {
 
                   {/* 🪄 Tooltip on hover */}
                   <Tooltip
-                    contentStyle={{ backgroundColor: "#2f0a43", border: "1px solid #6a0dad" }}
+                    contentStyle={{ backgroundColor: "#2f0a43", border: "1px solid #6a0dad", color: "#ffffff"}}
                     itemStyle={{ color: "#ffffff" }}
                   />
 
