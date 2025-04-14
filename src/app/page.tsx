@@ -81,10 +81,10 @@ export default function Home() {
     >
       {/* 🎴 Main card container */}
       <Card className="w-full max-w-6xl bg-[#b2cbd3] shadow-xl rounded-2xl border-0">
-        <CardContent className="p-8 relative">
+        <CardContent className="py-4 px-6 relative">
 
           {/* 🛠️ Fix buttons and Reset button */}
-          <div className="flex flex-wrap justify-center items-center gap-2 mb-6">
+          <div className="flex flex-wrap justify-center items-center gap-2 mb-4">
             {/* 🔘 Buttons for each fix */}
             {["fix 1", "fix 2", "fix 3"].map((fix) => (
               <motion.button
@@ -179,9 +179,14 @@ export default function Home() {
                 <LineChart
                   data={adjustedData}
                   style={{ backgroundColor: "#008db9", borderRadius: "12px" }}
+                  margin={{
+                    top: 30,
+                    right: 15,
+                    left: -5,
+                    bottom: 5,}}
                 >
                   {/* 🧱 Chart grid */}
-                  <CartesianGrid stroke="#ffffff" strokeDasharray="3 3" />
+                  <CartesianGrid stroke="#ffffff" strokeDasharray="3 3"/>
 
                   {/* 📅 X Axis */}
                   <XAxis
@@ -192,10 +197,12 @@ export default function Home() {
                     stroke="#d6c2f7"
                     label={{
                       value: "Years",
-                      position: "insideBottom",
+                      position: "left",
                       offset: 10,
-                      fill: "#d6c2f7",
+                      fill: "#23282a",
+                      
                     }}
+                    tick={{ fontSize: 20, fill: "#d6c2f7" }}
                   />
 
                   {/* 🔼 Y Axis */}
@@ -205,10 +212,13 @@ export default function Home() {
                     stroke="#d6c2f7"
                     label={{
                       value: "Projection (%)",
-                      angle: -90,
-                      position: "insideLeft",
-                      fill: "#d6c2f7",
+                      position: "top",
+                      offset: 10,
+                      dx: 35,
+                      dy: -5,
+                      fill: "#23282a",
                     }}
+                    tick={{ fontSize: 20, fill: "#d6c2f7" }}
                   />
 
                   {/* 🪄 Tooltip on hover */}
