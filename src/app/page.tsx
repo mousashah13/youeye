@@ -25,15 +25,36 @@ import { ChevronUp, ChevronDown } from "lucide-react"
 
 // 🧠 Define possible fixes and their effects
 const fixEffects = {
-  "fix 1": 0.05,  // +5% effect
-  "fix 2": -0.03, // -3% effect
-  "fix 3": 0.10,  // +10% effect
+  "fix-1": 0.05,  // +5% effect
+  "fix-2": -0.03, // -3% effect
+  "fix-3": 0.10,  // +10% effect
 }
+// Button configuration
+const buttons = [
+  {
+    id: "fix-1",
+    label: "Fix 1",
+    description: "Description 1: +5% effect"
+  },
+  {
+    id: "fix-2",
+    label: "Fix 2",
+    description: "Description 2: -3% effect"
+  },
+  {
+    id: "fix-3",
+    label: "Fix 3",
+    description: "Description 3: +10% effect"
+  }
+];
 
 // 🏠 The main Home page
 export default function Home() {
   // 🗃️ State to track which fixes are active
   const [activeFixes, setActiveFixes] = useState<string[]>([])
+
+  // State for active button
+  const [activeDescriptions, setActiveDescriptions] = useState<string[]>([])
 
   // 🗓️ State for number of years shown in the chart
   const [numYears, setNumYears] = useState(4)
@@ -48,9 +69,17 @@ export default function Home() {
     )
   }
 
+  const handleFixClick = (fix: string) => {
+    toggleFix(fix)
+    setActiveDescriptions((prev) =>
+      prev.includes(fix) ? prev.filter((f) => f !== fix) : [...prev, fix]
+    )
+  }
+
   // 🔄 Reset all fixes (clear activeFixes)
   const resetFixes = () => {
     setActiveFixes([])
+    setActiveDescriptions([])
   }
 
   // ➕ Sum up the total adjustment from active fixes
@@ -86,22 +115,23 @@ export default function Home() {
           {/* 🛠️ Fix buttons and Reset button */}
           <div className="flex flex-wrap justify-center items-center gap-2 mb-4">
             {/* 🔘 Buttons for each fix */}
-            {["fix 1", "fix 2", "fix 3"].map((fix) => (
+            {buttons.map((btn) => (
+              <div key={btn.id} className="flex flex-col items-center w-16">
               <motion.button
-                key={fix}
                 whileTap={{ scale: 0.9 }}
                 whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
                 transition={{ type: "spring", stiffness: 300 }}
-                onClick={() => toggleFix(fix)}
+                onClick={() => handleFixClick(btn.id)}
                 className={`w-14 h-7 text-xs font-medium rounded-xl transition-all tracking-wide ${
-                  activeFixes.includes(fix)
-                    ? "bg-yellow-400 text-black ring-2 ring-yellow-300"  // 🔥 Active button
-                    : "bg-[#00546f] text-[#e9e9e9] hover:bg-black hover:text-white" // ⚫ Inactive button
+                  activeFixes.includes(btn.id)
+                    ? "bg-yellow-400 text-black ring-2 ring-yellow-300"
+                    : "bg-[#00546f] text-[#e9e9e9] hover:bg-black hover:text-white"
                 }`}
               >
-                {fix.toUpperCase()}
+                {btn.label}
               </motion.button>
-            ))}
+            </div>
+          ))}
 
             {/* 🔁 Reset button */}
             <motion.button
@@ -114,6 +144,8 @@ export default function Home() {
               Reset
             </motion.button>
           </div>
+
+          
 
           {/* 📈 Chart area */}
           <div className="relative flex justify-center items-center">
@@ -242,6 +274,27 @@ export default function Home() {
             </motion.div>
 
           </div>
+
+         {/* Description Window */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="w-full bg-white/80 text-[#23282a] rounded-xl p-4 mb-4 shadow-md"
+          >
+            <h3 className="text-md font-bold mb-2">Fixes Applied:</h3>
+            {activeDescriptions.length > 0 ? (
+              <ul className="list-disc pl-5 space-y-1 text-sm">
+                {buttons
+                  .filter((btn) => activeDescriptions.includes(btn.id))
+                  .map((btn) => (
+                    <li key={btn.id}>{btn.description}</li>
+                  ))}
+              </ul>
+            ) : (
+              <p className="text-sm italic">No fixes selected.</p>
+            )}
+          </motion.div>
 
         </CardContent>
       </Card>
