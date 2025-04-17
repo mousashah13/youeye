@@ -139,7 +139,7 @@ export default function Home() {
               whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
               transition={{ type: "spring", stiffness: 300 }}
               onClick={resetFixes}
-              className="h-7 text-sm px-4 font-semibold rounded-lg bg-yellow-400 text-black hover:bg-black hover:text-yellow-400 border-none transition-all"
+              className="h-7 text-sm px-4 font-semibold rounded-lg bg-[#00546f] text-[#e9e9e9] hover:bg-black hover:text-yellow-400 border-none transition-all"
             >
               Reset
             </motion.button>
@@ -150,31 +150,6 @@ export default function Home() {
           {/* 📈 Chart area */}
           <div className="relative flex justify-center items-center">
 
-            {/* ⬆️⬇️ Y-axis (vertical) zoom buttons */}
-            <div className="absolute left-[-60px] top-1/2 -translate-y-1/2 flex flex-col items-center gap-2">
-              {/* Zoom in Y-axis */}
-              <motion.button
-                whileTap={{ scale: 0.9 }}
-                whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
-                transition={{ type: "spring", stiffness: 300 }}
-                className="bg-[#008db9] hover:bg-yellow-400 text-[#23282a] rounded-full p-2 shadow-md transition-all"
-                onClick={() => setYScale((prev) => Math.min(prev + 50, 1000))}
-              >
-                <ChevronUp className="h-5 w-5" />
-              </motion.button>
-
-              {/* Zoom out Y-axis */}
-              <motion.button
-                whileTap={{ scale: 0.9 }}
-                whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
-                transition={{ type: "spring", stiffness: 300 }}
-                className="bg-[#008db9] hover:bg-yellow-400 text-[#23282a] rounded-full p-2 shadow-md transition-all"
-                onClick={() => setYScale((prev) => Math.max(prev - 50, 10))}
-              >
-                <ChevronDown className="h-5 w-5" />
-              </motion.button>
-            </div>
-
             {/* ➡️⬅️ X-axis (horizontal) zoom buttons */}
             <div className="absolute bottom-[-40px] flex items-center gap-2">
               {/* More years */}
@@ -183,7 +158,7 @@ export default function Home() {
                 whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
                 transition={{ type: "spring", stiffness: 300 }}
                 className="bg-[#008db9] hover:bg-yellow-400 text-[#23282a] rounded-full p-2 shadow-md transition-all"
-                onClick={() => setNumYears((prev) => Math.min(prev + 1, 15))}
+                onClick={() => setNumYears((prev) => Math.min(prev + 1, 10))}
               >
                 <ChevronUp className="h-5 w-5" />
               </motion.button>
