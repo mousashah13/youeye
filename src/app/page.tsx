@@ -134,10 +134,10 @@ export default function Home() {
               whileTap={{ scale: 0.9 }}
               whileHover={{ boxShadow: "0px 0px 10px #BDF26D" }}
               transition={{ type: "spring", stiffness: 300 }}
-              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 bg-[#0554F2] hover:bg-[#76A646] text-white rounded-full p-3 shadow-lg transition-all"
+              className="absolute left-1 sm:left-4 top-1/2 -translate-y-1/2 z-10 bg-[#0554F2] hover:bg-[#76A646] text-white rounded-full p-2 sm:p-3 shadow-lg transition-all"
               onClick={() => setNumYears((prev) => Math.max(prev - 1, 1))}
             >
-              <ChevronDown className="h-6 w-6" />
+              <ChevronDown className="h-5 w-5" />
             </motion.button>
 
             {/* Right Arrow (⬆️) */}
@@ -145,14 +145,14 @@ export default function Home() {
               whileTap={{ scale: 0.9 }}
               whileHover={{ boxShadow: "0px 0px 10px #BDF26D" }}
               transition={{ type: "spring", stiffness: 300 }}
-              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 bg-[#0554F2] hover:bg-[#76A646] text-white rounded-full p-3 shadow-lg transition-all"
+              className="absolute right-1 sm:right-4 top-1/2 -translate-y-1/2 z-10 bg-[#0554F2] hover:bg-[#76A646] text-white rounded-full p-2 sm:p-3 shadow-lg transition-all"
               onClick={() => setNumYears((prev) => Math.min(prev + 1, 10))}
             >
-              <ChevronUp className="h-6 w-6" />
+              <ChevronUp className="h-5 w-5" />
             </motion.button>
 
             {/* Responsive Chart with Tight Mobile Padding */}
-            <div className="pl-12 pr-12 sm:pl-16 sm:pr-16 w-full h-full">
+            <div className="pl-10 pr-10 sm:pl-16 sm:pr-16 w-full h-full">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart
                   data={adjustedData}
@@ -184,7 +184,7 @@ export default function Home() {
                       angle: -90,
                       position: "insideLeft",
                       offset: -5,
-                      dy: 20,
+                      dy: 50,
                       fill: "#EFF2EB",
                       fontSize: 16
                     }}
