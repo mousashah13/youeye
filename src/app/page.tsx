@@ -33,17 +33,17 @@ const fixEffects = {
 const buttons = [
   {
     id: "fix-1",
-    label: "Fix 1",
+    label: "Fire CEO",
     description: "Description 1: +5% effect"
   },
   {
     id: "fix-2",
-    label: "Fix 2",
+    label: "Downsizing",
     description: "Description 2: -3% effect"
   },
   {
     id: "fix-3",
-    label: "Fix 3",
+    label: "Training",
     description: "Description 3: +10% effect"
   }
 ];
@@ -122,7 +122,7 @@ export default function Home() {
                 whileHover={{ boxShadow: "0px 0px 10px #f5c542" }}
                 transition={{ type: "spring", stiffness: 300 }}
                 onClick={() => handleFixClick(btn.id)}
-                className={`w-14 h-7 text-xs font-medium rounded-xl transition-all tracking-wide ${
+                className={`w-flex h-7 text-xs font-medium rounded-lg px-1 transition-all tracking-wide ${
                   activeFixes.includes(btn.id)
                     ? "bg-yellow-400 text-black ring-2 ring-yellow-300"
                     : "bg-[#00546f] text-[#e9e9e9] hover:bg-black hover:text-white"
@@ -209,7 +209,7 @@ export default function Home() {
                       fill: "#23282a",
                       
                     }}
-                    tick={{ fontSize: 20, fill: "#d6c2f7" }}
+                    tick={{ fontSize: 16, fill: "#d6c2f7" }}
                   />
 
                   {/* 🔼 Y Axis */}
@@ -225,12 +225,12 @@ export default function Home() {
                       dy: -5,
                       fill: "#23282a",
                     }}
-                    tick={{ fontSize: 20, fill: "#d6c2f7" }}
+                    tick={{ fontSize: 16, fill: "#d6c2f7" }}
                   />
 
                   {/* 🪄 Tooltip on hover */}
                   <Tooltip
-                    contentStyle={{ backgroundColor: "#2f0a43", border: "1px solid #6a0dad", color: "#ffffff"}}
+                    contentStyle={{ backgroundColor: "#2f0a43", border: "1px solid #6a0dad", color: "#ffffff", fontSize: 16}}
                     itemStyle={{ color: "#ffffff" }}
                   />
 
