@@ -126,33 +126,33 @@ export default function Home() {
             </motion.button>
           </div>
 
-          {/* Chart container with arrows */}
+          {/* Chart Container */}
           <div className="relative w-full h-[80vh] sm:h-[500px]">
 
-            {/* Left arrow (⬇️) */}
+            {/* Left Arrow (⬇️) */}
             <motion.button
               whileTap={{ scale: 0.9 }}
               whileHover={{ boxShadow: "0px 0px 10px #BDF26D" }}
               transition={{ type: "spring", stiffness: 300 }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-[#0554F2] hover:bg-[#76A646] text-white rounded-full p-3 shadow-lg transition-all"
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 bg-[#0554F2] hover:bg-[#76A646] text-white rounded-full p-3 shadow-lg transition-all"
               onClick={() => setNumYears((prev) => Math.max(prev - 1, 1))}
             >
               <ChevronDown className="h-6 w-6" />
             </motion.button>
 
-            {/* Right arrow (⬆️) */}
+            {/* Right Arrow (⬆️) */}
             <motion.button
               whileTap={{ scale: 0.9 }}
               whileHover={{ boxShadow: "0px 0px 10px #BDF26D" }}
               transition={{ type: "spring", stiffness: 300 }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-[#0554F2] hover:bg-[#76A646] text-white rounded-full p-3 shadow-lg transition-all"
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 bg-[#0554F2] hover:bg-[#76A646] text-white rounded-full p-3 shadow-lg transition-all"
               onClick={() => setNumYears((prev) => Math.min(prev + 1, 10))}
             >
               <ChevronUp className="h-6 w-6" />
             </motion.button>
 
-            {/* Graph */}
-            <div className="pl-16 pr-16 w-full h-full">
+            {/* Responsive Chart with Tight Mobile Padding */}
+            <div className="pl-12 pr-12 sm:pl-16 sm:pr-16 w-full h-full">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart
                   data={adjustedData}
@@ -250,6 +250,7 @@ export default function Home() {
               <p className="text-sm italic">No fixes selected.</p>
             )}
           </motion.div>
+
         </CardContent>
       </Card>
     </motion.main>
