@@ -23,6 +23,9 @@ import {
 // ⬆️⬇️ Icons for up/down buttons
 import { ChevronUp, ChevronDown } from "lucide-react"
 
+// Color themes 
+import colors from "../../colors"
+
 // 🧠 Define possible fixes and their effects
 const fixEffects = {
   "fix-1": 0.05,  // +5% effect
@@ -103,13 +106,14 @@ export default function Home() {
   // 🖥️ Return the page layout
   return (
     <motion.main
-      className="min-h-screen bg-[#e9e9e9] flex items-center justify-center p-8"
+      className="min-h-screen flex items-center justify-center p-8"
+      style={{ backgroundColor: colors.lightGray }}
       initial={{ opacity: 0 }}   // 👻 Start hidden
       animate={{ opacity: 1 }}   // 🎥 Fade in
       transition={{ duration: 1 }}
     >
       {/* 🎴 Main card container */}
-      <Card className="w-full max-w-6xl bg-[#b2cbd3] shadow-xl rounded-2xl border-0">
+      <Card className="w-full max-w-6xl shadow-xl rounded-2xl border-0"style={{ backgroundColor: colors.lightBlue }}>
         <CardContent className="py-4 px-6 relative">
 
           {/* 🛠️ Fix buttons and Reset button */}
