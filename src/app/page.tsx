@@ -10,32 +10,33 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  ResponsiveContainer,
+  ResponsiveContainer
 } from "recharts"
 import { ChevronUp, ChevronDown } from "lucide-react"
+import type { TooltipProps } from "recharts"
 
 const colors = {
   primaryBlue: "#0554F2",
   deepGreen: "#052608",
   mossGreen: "#76A646",
   limeGlow: "#BDF26D",
-  softIvory: "#EFF2EB",
+  softIvory: "#EFF2EB"
 }
 
 const fixEffects = {
   "fix-1": 0.05,
   "fix-2": -0.03,
-  "fix-3": 0.1,
+  "fix-3": 0.1
 }
 
 const buttons = [
   { id: "fix-1", label: "Fire CEO", description: "Description 1: +5% effect" },
   { id: "fix-2", label: "Downsizing", description: "Description 2: -3% effect" },
-  { id: "fix-3", label: "Training", description: "Description 3: +10% effect" },
+  { id: "fix-3", label: "Training", description: "Description 3: +10% effect" }
 ]
 
-// ✅ Custom Tooltip showing x and y
-const CustomTooltip = ({ active, payload, label }: any) => {
+// ✅ Custom tooltip with proper type
+const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
   if (!active || !payload || !payload.length) return null
 
   return (
@@ -50,7 +51,7 @@ export default function Home() {
   const [activeFixes, setActiveFixes] = useState<string[]>([])
   const [activeDescriptions, setActiveDescriptions] = useState<string[]>([])
   const [numYears, setNumYears] = useState(4)
-  const [yScale, setYScale] = useState(100)
+  const [yScale] = useState(100) // ✅ Remove unused setter
 
   const toggleFix = (fix: string) => {
     setActiveFixes((prev) =>
@@ -77,12 +78,12 @@ export default function Home() {
 
   const baseData = Array.from({ length: numYears }, (_, i) => ({
     year: i + 1,
-    value: yScale + i * (80 + numYears * 5),
+    value: yScale + i * (80 + numYears * 5)
   }))
 
   const adjustedData = baseData.map((d) => ({
     year: d.year,
-    value: d.value * (1 + totalAdjustment),
+    value: d.value * (1 + totalAdjustment)
   }))
 
   return (
@@ -174,7 +175,7 @@ export default function Home() {
                       offset: -10,
                       fill: "#EFF2EB",
                       fontSize: 16,
-                      dx: -20,
+                      dx: -20
                     }}
                     tick={{ fontSize: 14, fill: "#EFF2EB" }}
                   />
@@ -187,9 +188,9 @@ export default function Home() {
                       angle: -90,
                       position: "insideLeft",
                       offset: -5,
-                      dy: 30,
+                      dy: 20,
                       fill: "#EFF2EB",
-                      fontSize: 16,
+                      fontSize: 16
                     }}
                     tick={{ fontSize: 14, fill: "#EFF2EB" }}
                   />
