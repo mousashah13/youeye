@@ -126,80 +126,83 @@ export default function Home() {
             </motion.button>
           </div>
 
-          {/* Chart */}
-          <div className="w-full h-[80vh] sm:h-[500px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart
-                data={adjustedData}
-                style={{ backgroundColor: "#052608", borderRadius: "14px" }}
-                margin={{ top: 30, right: 15, left: 15, bottom: 50 }}
-              >
-                <CartesianGrid stroke="#BDF26D" strokeDasharray="3 3" />
-                <XAxis
-                  dataKey="year"
-                  domain={[1, numYears]}
-                  tickCount={numYears}
-                  stroke="#EFF2EB"
-                  label={{
-                    value: "Years",
-                    position: "insideBottom",
-                    offset: -10,
-                    fill: "#EFF2EB",
-                    fontSize: 16,
-                    dx: -20
-                  }}
-                  tick={{ fontSize: 14, fill: "#EFF2EB" }}
-                />
-                <YAxis
-                  type="number"
-                  domain={[0, "auto"]}
-                  stroke="#EFF2EB"
-                  label={{
-                    value: "Projection (%)",
-                    angle: -90,
-                    position: "insideLeft",
-                    offset: -5,
-                    dy: 20,
-                    fill: "#EFF2EB",
-                    fontSize: 16
-                  }}
-                  tick={{ fontSize: 14, fill: "#EFF2EB" }}
-                />
-                <Tooltip content={<CustomTooltip />} />
-                <Line
-                  type="monotone"
-                  dataKey="value"
-                  stroke="#BDF26D"
-                  strokeWidth={3}
-                  activeDot={{ r: 6, fill: "#BDF26D", stroke: "#76A646" }}
-                  dot={{ r: 4, fill: "#76A646" }}
-                  animationDuration={1000}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
+          {/* Chart container with arrows */}
+          <div className="relative w-full h-[80vh] sm:h-[500px]">
 
-          {/* Controller Arrows Below the Chart */}
-          <div className="flex justify-between items-center w-full mt-4 px-4">
+            {/* Left arrow (⬇️) */}
             <motion.button
               whileTap={{ scale: 0.9 }}
               whileHover={{ boxShadow: "0px 0px 10px #BDF26D" }}
               transition={{ type: "spring", stiffness: 300 }}
-              className="bg-[#0554F2] hover:bg-[#76A646] text-white rounded-full p-3 shadow-lg transition-all"
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-[#0554F2] hover:bg-[#76A646] text-white rounded-full p-3 shadow-lg transition-all"
               onClick={() => setNumYears((prev) => Math.max(prev - 1, 1))}
             >
               <ChevronDown className="h-6 w-6" />
             </motion.button>
 
+            {/* Right arrow (⬆️) */}
             <motion.button
               whileTap={{ scale: 0.9 }}
               whileHover={{ boxShadow: "0px 0px 10px #BDF26D" }}
               transition={{ type: "spring", stiffness: 300 }}
-              className="bg-[#0554F2] hover:bg-[#76A646] text-white rounded-full p-3 shadow-lg transition-all"
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-[#0554F2] hover:bg-[#76A646] text-white rounded-full p-3 shadow-lg transition-all"
               onClick={() => setNumYears((prev) => Math.min(prev + 1, 10))}
             >
               <ChevronUp className="h-6 w-6" />
             </motion.button>
+
+            {/* Graph */}
+            <div className="pl-16 pr-16 w-full h-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={adjustedData}
+                  style={{ backgroundColor: "#052608", borderRadius: "14px" }}
+                  margin={{ top: 30, right: 15, left: 15, bottom: 50 }}
+                >
+                  <CartesianGrid stroke="#BDF26D" strokeDasharray="3 3" />
+                  <XAxis
+                    dataKey="year"
+                    domain={[1, numYears]}
+                    tickCount={numYears}
+                    stroke="#EFF2EB"
+                    label={{
+                      value: "Years",
+                      position: "insideBottom",
+                      offset: -10,
+                      fill: "#EFF2EB",
+                      fontSize: 16,
+                      dx: -20
+                    }}
+                    tick={{ fontSize: 14, fill: "#EFF2EB" }}
+                  />
+                  <YAxis
+                    type="number"
+                    domain={[0, "auto"]}
+                    stroke="#EFF2EB"
+                    label={{
+                      value: "Projection (%)",
+                      angle: -90,
+                      position: "insideLeft",
+                      offset: -5,
+                      dy: 20,
+                      fill: "#EFF2EB",
+                      fontSize: 16
+                    }}
+                    tick={{ fontSize: 14, fill: "#EFF2EB" }}
+                  />
+                  <Tooltip content={<CustomTooltip />} />
+                  <Line
+                    type="monotone"
+                    dataKey="value"
+                    stroke="#BDF26D"
+                    strokeWidth={3}
+                    activeDot={{ r: 6, fill: "#BDF26D", stroke: "#76A646" }}
+                    dot={{ r: 4, fill: "#76A646" }}
+                    animationDuration={1000}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
           </div>
 
           {/* Fix Descriptions */}
