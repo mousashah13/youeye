@@ -35,7 +35,6 @@ const buttons = [
   { id: "fix-3", label: "Training", description: "Description 3: +10% effect" }
 ]
 
-// ✅ Custom tooltip with proper type
 const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
   if (!active || !payload || !payload.length) return null
 
@@ -51,7 +50,7 @@ export default function Home() {
   const [activeFixes, setActiveFixes] = useState<string[]>([])
   const [activeDescriptions, setActiveDescriptions] = useState<string[]>([])
   const [numYears, setNumYears] = useState(4)
-  const [yScale] = useState(100) // ✅ Remove unused setter
+  const [yScale] = useState(100)
 
   const toggleFix = (fix: string) => {
     setActiveFixes((prev) =>
@@ -88,33 +87,32 @@ export default function Home() {
 
   return (
     <motion.main
-      className="min-h-screen flex items-center justify-center p-8"
+      className="min-h-screen flex items-center justify-center p-4 sm:p-8"
       style={{ backgroundColor: colors.softIvory }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
       <Card className="w-full max-w-6xl shadow-xl rounded-2xl border-0" style={{ backgroundColor: colors.softIvory }}>
-        <CardContent className="py-4 px-6 relative">
+        <CardContent className="py-4 px-4 sm:px-6 relative">
 
           {/* Fix Buttons */}
           <div className="flex flex-wrap justify-center items-center gap-2 mb-4">
             {buttons.map((btn) => (
-              <div key={btn.id} className="flex flex-col items-center">
-                <motion.button
-                  whileTap={{ scale: 0.9 }}
-                  whileHover={{ boxShadow: "0px 0px 10px #BDF26D" }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                  onClick={() => handleFixClick(btn.id)}
-                  className={`text-xs font-semibold px-3 py-1 rounded-full transition-all tracking-wide shadow-md ${
-                    activeFixes.includes(btn.id)
-                      ? "bg-[#BDF26D] text-[#052608] ring-2 ring-[#76A646]"
-                      : "bg-[#0554F2] text-white hover:bg-[#052608] hover:text-[#EFF2EB]"
-                  }`}
-                >
-                  {btn.label}
-                </motion.button>
-              </div>
+              <motion.button
+                key={btn.id}
+                whileTap={{ scale: 0.9 }}
+                whileHover={{ boxShadow: "0px 0px 10px #BDF26D" }}
+                transition={{ type: "spring", stiffness: 300 }}
+                onClick={() => handleFixClick(btn.id)}
+                className={`text-xs font-semibold px-3 py-1 rounded-full transition-all tracking-wide shadow-md ${
+                  activeFixes.includes(btn.id)
+                    ? "bg-[#BDF26D] text-[#052608] ring-2 ring-[#76A646]"
+                    : "bg-[#0554F2] text-white hover:bg-[#052608] hover:text-[#EFF2EB]"
+                }`}
+              >
+                {btn.label}
+              </motion.button>
             ))}
 
             <motion.button
@@ -128,34 +126,38 @@ export default function Home() {
             </motion.button>
           </div>
 
-          {/* Chart */}
-          <div className="relative flex justify-center items-center">
-            <div className="absolute bottom-[-40px] flex items-center gap-2">
+          {/* Chart with Controller Arrows */}
+          <div className="relative flex justify-center items-center w-full">
+
+            {/* Controller Arrows Left/Right */}
+            <div className="absolute inset-0 flex items-center justify-between px-2 z-10">
               <motion.button
                 whileTap={{ scale: 0.9 }}
                 whileHover={{ boxShadow: "0px 0px 10px #BDF26D" }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className="bg-[#0554F2] hover:bg-[#76A646] text-white rounded-full p-2 shadow-lg transition-all"
+                className="bg-[#0554F2] hover:bg-[#76A646] text-white rounded-full p-3 shadow-lg transition-all"
                 onClick={() => setNumYears((prev) => Math.min(prev + 1, 10))}
               >
-                <ChevronUp className="h-5 w-5" />
+                <ChevronUp className="h-6 w-6 rotate-90" />
               </motion.button>
+
               <motion.button
                 whileTap={{ scale: 0.9 }}
                 whileHover={{ boxShadow: "0px 0px 10px #BDF26D" }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className="bg-[#0554F2] hover:bg-[#76A646] text-white rounded-full p-2 shadow-lg transition-all"
+                className="bg-[#0554F2] hover:bg-[#76A646] text-white rounded-full p-3 shadow-lg transition-all"
                 onClick={() => setNumYears((prev) => Math.max(prev - 1, 1))}
               >
-                <ChevronDown className="h-5 w-5" />
+                <ChevronDown className="h-6 w-6 -rotate-90" />
               </motion.button>
             </div>
 
+            {/* Chart */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2 }}
-              className="w-full h-[500px]"
+              className="w-full h-[80vh] sm:h-[500px]"
             >
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart
@@ -209,7 +211,7 @@ export default function Home() {
             </motion.div>
           </div>
 
-          {/* Fix Description (inline color-coded %) */}
+          {/* Fix Descriptions */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -254,9 +256,9 @@ export default function Home() {
               <p className="text-sm italic">No fixes selected.</p>
             )}
           </motion.div>
-
         </CardContent>
       </Card>
     </motion.main>
   )
 }
+
