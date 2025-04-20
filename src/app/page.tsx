@@ -126,7 +126,7 @@ export default function Home() {
             </motion.button>
           </div>
 
-          {/* Chart Container */}
+          {/* Chart + Controller Buttons */}
           <div className="relative w-full h-[80vh] sm:h-[500px]">
 
             {/* Left Arrow (⬇️) */}
@@ -134,7 +134,7 @@ export default function Home() {
               whileTap={{ scale: 0.9 }}
               whileHover={{ boxShadow: "0px 0px 10px #BDF26D" }}
               transition={{ type: "spring", stiffness: 300 }}
-              className="absolute left-1 sm:left-4 top-1/2 -translate-y-1/2 z-10 bg-[#0554F2] hover:bg-[#76A646] text-white rounded-full p-2 sm:p-3 shadow-lg transition-all"
+              className="absolute left-[-4] sm:left-2 top-1/2 -translate-y-1/2 z-10 bg-[#0554F2] hover:bg-[#76A646] text-white rounded-full p-2 sm:p-3 shadow-lg transition-all"
               onClick={() => setNumYears((prev) => Math.max(prev - 1, 1))}
             >
               <ChevronDown className="h-5 w-5" />
@@ -145,19 +145,19 @@ export default function Home() {
               whileTap={{ scale: 0.9 }}
               whileHover={{ boxShadow: "0px 0px 10px #BDF26D" }}
               transition={{ type: "spring", stiffness: 300 }}
-              className="absolute right-1 sm:right-4 top-1/2 -translate-y-1/2 z-10 bg-[#0554F2] hover:bg-[#76A646] text-white rounded-full p-2 sm:p-3 shadow-lg transition-all"
+              className="absolute right-[-4] sm:right-2 top-1/2 -translate-y-1/2 z-10 bg-[#0554F2] hover:bg-[#76A646] text-white rounded-full p-2 sm:p-3 shadow-lg transition-all"
               onClick={() => setNumYears((prev) => Math.min(prev + 1, 10))}
             >
               <ChevronUp className="h-5 w-5" />
             </motion.button>
 
-            {/* Responsive Chart with Tight Mobile Padding */}
-            <div className="pl-10 pr-10 sm:pl-16 sm:pr-16 w-full h-full">
+            {/* Chart */}
+            <div className="pl-8 pr-8 sm:pl-12 sm:pr-12 w-full h-full">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart
                   data={adjustedData}
                   style={{ backgroundColor: "#052608", borderRadius: "14px" }}
-                  margin={{ top: 30, right: 15, left: 15, bottom: 50 }}
+                  margin={{ top: 30, right: 10, left: 5, bottom: 40 }}
                 >
                   <CartesianGrid stroke="#BDF26D" strokeDasharray="3 3" />
                   <XAxis
@@ -170,10 +170,10 @@ export default function Home() {
                       position: "insideBottom",
                       offset: -10,
                       fill: "#EFF2EB",
-                      fontSize: 16,
+                      fontSize: 14,
                       dx: -20
                     }}
-                    tick={{ fontSize: 14, fill: "#EFF2EB" }}
+                    tick={{ fontSize: 12, fill: "#EFF2EB" }}
                   />
                   <YAxis
                     type="number"
@@ -183,13 +183,13 @@ export default function Home() {
                       value: "Projection (%)",
                       angle: -90,
                       position: "insideLeft",
-                      offset: 0,        // bring closer to the axis
-                      dy: 10,           // reduce vertical offset
+                      offset: 0,
+                      dy: 10,
                       fill: "#EFF2EB",
-                      fontSize: 12,     // smaller label
+                      fontSize: 12,
                       style: { fontWeight: 500 }
                     }}
-                    tick={{ fontSize: 14, fill: "#EFF2EB" }}
+                    tick={{ fontSize: 10, fill: "#EFF2EB" }}
                   />
                   <Tooltip content={<CustomTooltip />} />
                   <Line
