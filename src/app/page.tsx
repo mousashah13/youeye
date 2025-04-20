@@ -183,10 +183,11 @@ export default function Home() {
                       value: "Projection (%)",
                       angle: -90,
                       position: "insideLeft",
-                      offset: -5,
-                      dy: 50,
+                      offset: 0,        // bring closer to the axis
+                      dy: 10,           // reduce vertical offset
                       fill: "#EFF2EB",
-                      fontSize: 16
+                      fontSize: 12,     // smaller label
+                      style: { fontWeight: 500 }
                     }}
                     tick={{ fontSize: 14, fill: "#EFF2EB" }}
                   />
